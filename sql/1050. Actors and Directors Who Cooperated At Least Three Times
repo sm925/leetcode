@@ -1,0 +1,6 @@
+/* Write your T-SQL query statement below */
+select s.ACTOR_ID, s.DIRECTOR_ID 
+    from (select actor_id, director_id, count(*) as cnt
+         from actordirector
+         group by actor_id, director_id) as s
+    where s.cnt >= 3
