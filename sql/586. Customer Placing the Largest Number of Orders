@@ -1,0 +1,6 @@
+/* Write your T-SQL query statement below */
+select top 1 s.customer_number
+    from (select customer_number, count(*) as cnt 
+            from orders 
+            group by customer_number) as s
+    order by s.cnt desc;
