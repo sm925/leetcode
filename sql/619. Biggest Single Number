@@ -1,5 +1,5 @@
 /* Write your T-SQL query statement below */
-with r as(select top 1 s.num
+with result as(select top 1 s.num
     from (select num, count(*) as cnt
             from my_numbers
             group by num) as s
@@ -7,10 +7,9 @@ with r as(select top 1 s.num
     order by s.num desc)
     
     
-    select case 
-                when num = '' then null
-                else end as num
-            from r
+    select max(num) as num /* because of max query will return null in case of blank */ 
+            from result
+            
             
             
    
