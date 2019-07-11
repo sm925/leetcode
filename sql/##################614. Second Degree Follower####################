@@ -1,0 +1,8 @@
+/* Write your T-SQL query statement below */
+select s.x as follower, count(*) as num
+    from (select distinct x.followee as x, x.follower as y
+            from (select * from follow where followee != follower) x
+            inner join (select * from follow where followee != follower) y
+            on x.followee = y.follower) s
+    group by s.x
+    order by s.x asc
