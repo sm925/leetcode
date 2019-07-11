@@ -1,0 +1,17 @@
+/* Write your T-SQL query statement below */
+with result as(
+    select s.id, s.visit_date, s.people, s.idx,
+        s.id - row_number() over(partition by s.idx order by s.id asc) as idx1
+        from (select id, visit_date, people,
+                case when people >= 100 then 'Y'
+                else 'N' end as idx
+                from stadium) s),
+result1 as(
+    select id, visit_date, people,
+            count(idx1) over(partition by idx order by id asc) as cnt, idx
+            from result)
+                
+select id, visit_date, people
+    from result1
+    where idx = 'Y' and cnt >= 3
+   
