@@ -1,0 +1,12 @@
+/* Write your T-SQL query statement below */
+select sell_date, num_sold, --products
+    STRING_AGG(products, ',') as products
+    from
+    (select sell_date,
+    count(*) over(partition by sell_date) as num_sold,
+    product as products
+    from (
+            select distinct(sell_date), product
+            from activities ) as sub1) as sub2
+    group by sell_date, num_sold
+    order by sell_date asc
