@@ -1,0 +1,15 @@
+/* Write your T-SQL query statement below */
+with cte as
+(
+select account, sum(amount) as balance
+    from transactions
+    group by account
+    )
+    
+select u.name, c.balance 
+    from cte c
+    inner join
+    users u
+    on
+    c.account = u.account
+    where balance > 10000
