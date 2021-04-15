@@ -1,0 +1,12 @@
+/* Write your T-SQL query statement below */
+select p.product_name, sub.unit
+    from products p
+    left join
+    (select distinct product_id, 
+    sum(unit) over(partition by product_id) as unit
+    from orders
+    where concat(month(order_date),'-',year(order_date)) = '2-2020'
+    ) sub
+     on 
+     p.product_id = sub.product_id
+     where sub.unit >= 100 
